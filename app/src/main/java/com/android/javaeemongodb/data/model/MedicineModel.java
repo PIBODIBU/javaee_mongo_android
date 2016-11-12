@@ -2,7 +2,16 @@ package com.android.javaeemongodb.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MedicineModel {
+import java.io.Serializable;
+
+public class MedicineModel implements Serializable {
+
+    private final String ID_TITLE = "Ідентифікатор";
+    private final String NAME_TITLE = "Медична назва";
+    private final String INDICATION_TITLE = "Показання";
+    private final String CONTRAINDICATION_TITLE = "Протипоказання";
+    private final String SALES_FORM_TITLE = "Форма продажу";
+
     @SerializedName("id")
     private String id;
 
@@ -44,5 +53,25 @@ public class MedicineModel {
 
     public String getSalesForm() {
         return salesForm;
+    }
+
+    public String getIdTitle() {
+        return ID_TITLE;
+    }
+
+    public String getNameTitle() {
+        return NAME_TITLE;
+    }
+
+    public String getIndicationTitle() {
+        return INDICATION_TITLE;
+    }
+
+    public String getContraindicationTitle() {
+        return CONTRAINDICATION_TITLE;
+    }
+
+    public String getSalesFormTitle() {
+        return SALES_FORM_TITLE;
     }
 }

@@ -2,4 +2,6 @@
     <string name="app_name">JavaEE+MongoDB</string>
     <string name="drawer_doc_list">Документи</string>
     <string name="drawer_info">Інформація</string>
+    <string name="menu_action_delete">Видалити</string>
+    <string name="menu_action_edit">Редагувати</string>
 </resources>

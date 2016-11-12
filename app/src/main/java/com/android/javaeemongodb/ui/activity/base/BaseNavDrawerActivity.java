@@ -118,7 +118,7 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
 
         final PrimaryDrawerItem info = new PrimaryDrawerItem()
                 .withName(getResources().getString(R.string.drawer_info))
-                .withIcon(GoogleMaterial.Icon.gmd_info)
+                .withIcon(GoogleMaterial.Icon.gmd_info_outline)
                 .withIdentifier(DrawerItems.InfoActivity.ordinal());
 
         AccountHeader accountHeader = new AccountHeaderBuilder()
