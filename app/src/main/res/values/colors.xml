@@ -9,6 +9,7 @@
 
     <color name="drawer_bg">#e1ffffff</color>
 
+    <color name="colorTextPrimary">#3e4d68</color>
     <color name="colorTextPrimaryDark">#37474f</color>
     <color name="colorTextSecondary">#9e9e9e</color>
     <color name="colorTextHint">#62000000</color>

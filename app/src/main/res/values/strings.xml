@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JavaEE+MongoDB</string>
+    <string name="drawer_doc_list">Документи</string>
+    <string name="drawer_info">Інформація</string>
 </resources>
