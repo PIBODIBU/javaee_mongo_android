@@ -4,4 +4,10 @@
     <string name="drawer_info">Інформація</string>
     <string name="menu_action_delete">Видалити</string>
     <string name="menu_action_edit">Редагувати</string>
+
+    <string name="hint_model_name">Медична назва</string>
+    <string name="hint_model_description">Опис</string>
+    <string name="hint_model_indication">Показання</string>
+    <string name="hint_model_contraindication">Протипоказання</string>
+    <string name="hint_model_sales_form">Форма продажу</string>
 </resources>

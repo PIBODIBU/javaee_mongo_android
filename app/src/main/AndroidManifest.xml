@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.InfoActivity"></activity>
+        <activity android:name=".ui.activity.InfoActivity" />
+        <activity android:name=".ui.activity.ModelEditActivity" />
     </application>
 
 </manifest>

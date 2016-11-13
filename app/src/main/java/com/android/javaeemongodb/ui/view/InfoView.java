@@ -27,4 +27,6 @@ public interface InfoView {
     MedicineModel getModelFromIntent(Intent intent);
 
     boolean checkIntent(Intent intent);
+
+    void startModelEditActivity();
 }

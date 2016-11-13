@@ -20,6 +20,7 @@ import com.android.javaeemongodb.ui.view.InfoView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class InfoActivity extends BaseNavDrawerActivity implements InfoView {
     private final String TAG = getClass().getSimpleName();
@@ -111,6 +112,12 @@ public class InfoActivity extends BaseNavDrawerActivity implements InfoView {
         return !(intent == null || intent.getExtras() == null ||
                 !intent.getExtras().containsKey(IntentKeys.OBJECT_MEDICINE_MODEL) ||
                 intent.getExtras().getSerializable(IntentKeys.OBJECT_MEDICINE_MODEL) == null);
+    }
 
+    @OnClick(R.id.fab_edit)
+    @Override
+    public void startModelEditActivity() {
+        startActivity(new Intent(InfoActivity.this, ModelEditActivity.class)
+                .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model));
     }
 }
