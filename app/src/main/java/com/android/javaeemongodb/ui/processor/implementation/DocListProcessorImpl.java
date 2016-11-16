@@ -26,7 +26,7 @@ public class DocListProcessorImpl implements DocListProcessor {
 
     @Override
     public void fillDataSet(final ArrayList<MedicineModel> dataSet) {
-        RetrofitAPI.getInstance(presenter.getView().getContext()).getMedicineModels().enqueue(new Callback<List<MedicineModel>>() {
+        RetrofitAPI.getInstance(presenter.getView().getContext()).getModels().enqueue(new Callback<List<MedicineModel>>() {
             @Override
             public void onResponse(Call<List<MedicineModel>> call, Response<List<MedicineModel>> response) {
                 if (response == null) {

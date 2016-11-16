@@ -2,7 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -19,7 +19,6 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupMenu"
             app:theme="@style/AppTheme.ToolBarStyle" />
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -42,6 +41,7 @@
         app:fabSize="normal"
         app:layout_anchor="@+id/recycler_view"
         app:layout_anchorGravity="bottom|right|end"
+        app:rippleColor="@color/colorAccentLight"
         app:srcCompat="@drawable/ic_add_white_24dp"
         app:useCompatPadding="true" />
 </android.support.design.widget.CoordinatorLayout>

@@ -33,8 +33,8 @@ public class MedicineModel implements Serializable {
 
     public MedicineModel(
             String id,
-            String description,
             String name,
+            String description,
             String indication,
             String contraindication,
             String salesForm

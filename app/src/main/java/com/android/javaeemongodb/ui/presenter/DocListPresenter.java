@@ -17,4 +17,6 @@ public interface DocListPresenter {
     void setupProcessor();
 
     DocListView getView();
+
+    void refreshDataSet();
 }

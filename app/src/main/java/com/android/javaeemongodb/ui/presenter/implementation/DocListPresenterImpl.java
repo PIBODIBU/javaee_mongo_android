@@ -54,6 +54,11 @@ public class DocListPresenterImpl implements DocListPresenter {
     }
 
     @Override
+    public void refreshDataSet() {
+        processor.reloadDataSet(adapter.getDataSet());
+    }
+
+    @Override
     public void onDestroy() {
 
     }
