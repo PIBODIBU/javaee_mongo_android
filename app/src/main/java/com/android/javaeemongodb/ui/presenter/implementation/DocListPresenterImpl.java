@@ -28,7 +28,7 @@ public class DocListPresenterImpl implements DocListPresenter {
 
     public DocListPresenterImpl(@NonNull DocListView view) {
         this.view = view;
-        this.processor = new DocListProcessorImpl();
+        this.processor = new DocListProcessorImpl(this);
     }
 
     @Override
@@ -84,5 +84,10 @@ public class DocListPresenterImpl implements DocListPresenter {
                 view.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public DocListView getView() {
+        return view;
     }
 }

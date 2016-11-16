@@ -8,6 +8,7 @@ public class MedicineModel implements Serializable {
 
     private final String ID_TITLE = "Ідентифікатор";
     private final String NAME_TITLE = "Медична назва";
+    private final String Description_TITLE = "Опис препарату";
     private final String INDICATION_TITLE = "Показання";
     private final String CONTRAINDICATION_TITLE = "Протипоказання";
     private final String SALES_FORM_TITLE = "Форма продажу";
@@ -18,6 +19,9 @@ public class MedicineModel implements Serializable {
     @SerializedName("name")
     private String name;
 
+    @SerializedName("description")
+    private String description;
+
     @SerializedName("indication")
     private String indication;
 
@@ -27,9 +31,17 @@ public class MedicineModel implements Serializable {
     @SerializedName("sales_form")
     private String salesForm;
 
-    public MedicineModel(String id, String name, String indication, String contraindication, String salesForm) {
+    public MedicineModel(
+            String id,
+            String description,
+            String name,
+            String indication,
+            String contraindication,
+            String salesForm
+    ) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.indication = indication;
         this.contraindication = contraindication;
         this.salesForm = salesForm;
@@ -41,6 +53,10 @@ public class MedicineModel implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getIndication() {

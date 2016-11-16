@@ -81,4 +81,9 @@ public class InfoPresenterImpl implements InfoPresenter {
     public InfoItemListAdapter getAdapter() {
         return adapter;
     }
+
+    @Override
+    public InfoView getView() {
+        return view;
+    }
 }

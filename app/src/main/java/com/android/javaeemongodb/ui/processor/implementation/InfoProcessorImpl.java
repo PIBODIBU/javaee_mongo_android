@@ -33,7 +33,7 @@ public class InfoProcessorImpl implements InfoProcessor {
             return;
         }
 
-        RetrofitAPI.getInstance().getMedicine(docId).enqueue(new Callback<MedicineModel>() {
+        RetrofitAPI.getInstance(presenter.getView().getContext()).getMedicine(docId).enqueue(new Callback<MedicineModel>() {
             @Override
             public void onResponse(Call<MedicineModel> call, Response<MedicineModel> response) {
                 if (response == null) {

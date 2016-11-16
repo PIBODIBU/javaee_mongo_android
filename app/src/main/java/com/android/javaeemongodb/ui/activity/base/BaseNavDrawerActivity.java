@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.ui.activity.InfoActivity;
 import com.android.javaeemongodb.ui.activity.DocListActivity;
+import com.android.javaeemongodb.ui.activity.SettingsActivity;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -81,7 +82,11 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
         }
 
         if (basename.equals(DocListActivity.class.getSimpleName())) {
-            drawer.setSelection(DrawerItems.MainActivity.ordinal());
+            drawer.setSelection(DrawerItems.DocListActivity.ordinal());
+        } else if (basename.equals(InfoActivity.class.getSimpleName())) {
+            drawer.setSelection(DrawerItems.InfoActivity.ordinal());
+        } else if (basename.equals(SettingsActivity.class.getSimpleName())) {
+            drawer.setSelection(DrawerItems.SettingsActivity.ordinal());
         } else {
             drawer.setSelection(-1);
         }
@@ -114,12 +119,17 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
         final PrimaryDrawerItem docList = new PrimaryDrawerItem()
                 .withName(getResources().getString(R.string.drawer_doc_list))
                 .withIcon(GoogleMaterial.Icon.gmd_reorder)
-                .withIdentifier(DrawerItems.MainActivity.ordinal());
+                .withIdentifier(DrawerItems.DocListActivity.ordinal());
 
         final PrimaryDrawerItem info = new PrimaryDrawerItem()
                 .withName(getResources().getString(R.string.drawer_info))
                 .withIcon(GoogleMaterial.Icon.gmd_info_outline)
                 .withIdentifier(DrawerItems.InfoActivity.ordinal());
+
+        final PrimaryDrawerItem settings = new PrimaryDrawerItem()
+                .withName(getResources().getString(R.string.drawer_settings))
+                .withIcon(GoogleMaterial.Icon.gmd_settings)
+                .withIdentifier(DrawerItems.SettingsActivity.ordinal());
 
         AccountHeader accountHeader = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -140,7 +150,8 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
                 .withSliderBackgroundColor(ContextCompat.getColor(this, android.R.color.white))
                 .addDrawerItems(
                         docList,
-                        info
+                        info,
+                        settings
                 )
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
                     @Override
@@ -180,7 +191,7 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
                             DrawerItems drawerItems = DrawerItems.values()[(int) drawerItem.getIdentifier()];
 
                             switch (drawerItems) {
-                                case MainActivity: {
+                                case DocListActivity: {
                                     if (currentClass.equals(DocListActivity.class.getSimpleName())) {
                                         break;
                                     } else {
@@ -198,6 +209,17 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
                                         finish();
 
                                         startActivity(new Intent(BaseNavDrawerActivity.this, InfoActivity.class)
+                                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                        break;
+                                    }
+                                }
+                                case SettingsActivity: {
+                                    if (currentClass.equals(SettingsActivity.class.getSimpleName())) {
+                                        break;
+                                    } else {
+                                        finish();
+
+                                        startActivity(new Intent(BaseNavDrawerActivity.this, SettingsActivity.class)
                                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                         break;
                                     }
@@ -256,7 +278,9 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
     }
 
     private enum DrawerItems {
-        MainActivity,
-        InfoActivity
+        DocListActivity,
+        InfoActivity,
+        ModelEditActivity,
+        SettingsActivity
     }
 }

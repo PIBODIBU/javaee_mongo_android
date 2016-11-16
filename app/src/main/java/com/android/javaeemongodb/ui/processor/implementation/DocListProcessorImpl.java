@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.android.javaeemongodb.data.api.RetrofitAPI;
 import com.android.javaeemongodb.data.model.MedicineModel;
+import com.android.javaeemongodb.ui.presenter.DocListPresenter;
 import com.android.javaeemongodb.ui.processor.DocListProcessor;
 
 import java.util.ArrayList;
@@ -17,10 +18,15 @@ public class DocListProcessorImpl implements DocListProcessor {
     private final String TAG = getClass().getSimpleName();
 
     private OnDataReloadListener onDataReloadListener;
+    private DocListPresenter presenter;
+
+    public DocListProcessorImpl(DocListPresenter presenter) {
+        this.presenter = presenter;
+    }
 
     @Override
     public void fillDataSet(final ArrayList<MedicineModel> dataSet) {
-        RetrofitAPI.getInstance().getMedicineModels().enqueue(new Callback<List<MedicineModel>>() {
+        RetrofitAPI.getInstance(presenter.getView().getContext()).getMedicineModels().enqueue(new Callback<List<MedicineModel>>() {
             @Override
             public void onResponse(Call<List<MedicineModel>> call, Response<List<MedicineModel>> response) {
                 if (response == null) {

@@ -3,6 +3,7 @@ package com.android.javaeemongodb.ui.presenter;
 import android.support.v7.widget.RecyclerView;
 
 import com.android.javaeemongodb.ui.adapter.InfoItemListAdapter;
+import com.android.javaeemongodb.ui.view.InfoView;
 
 public interface InfoPresenter {
     void start();
@@ -16,4 +17,6 @@ public interface InfoPresenter {
     void setupProcessor();
 
     InfoItemListAdapter getAdapter();
+
+    InfoView getView();
 }

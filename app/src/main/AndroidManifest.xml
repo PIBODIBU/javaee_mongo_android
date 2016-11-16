@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".ui.activity.InfoActivity" />
         <activity android:name=".ui.activity.ModelEditActivity" />
+        <activity android:name=".ui.activity.SettingsActivity" />
+        <activity android:name=".ui.activity.ModelAddActivity"></activity>
     </application>
 
 </manifest>

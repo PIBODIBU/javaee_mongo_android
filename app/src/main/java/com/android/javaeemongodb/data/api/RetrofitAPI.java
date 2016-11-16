@@ -1,15 +1,25 @@
 package com.android.javaeemongodb.data.api;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.android.javaeemongodb.helper.SharedPrefUtils;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitAPI {
-    private static final String BASE_URL = "http://192.168.1.230:8080/api/v1/";
+    private static final String TAG = "RetrofitAPI";
+
+    private static String BASE_URL = "";
     private static IAPIService api = null;
 
-    public static IAPIService getInstance() {
+    public static IAPIService getInstance(Context context) {
+        BASE_URL = "http://" + SharedPrefUtils.getInstance(context).getRestApiHost() +
+                ":" + SharedPrefUtils.getInstance(context).getRestApiPort().toString() + "/api/v1/";
+
         if (api == null) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -28,5 +38,9 @@ public class RetrofitAPI {
         }
 
         return api;
+    }
+
+    public static void destroy() {
+        api = null;
     }
 }
