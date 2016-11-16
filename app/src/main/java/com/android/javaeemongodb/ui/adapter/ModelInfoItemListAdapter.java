@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.javaeemongodb.R;
@@ -12,20 +13,21 @@ import com.android.javaeemongodb.ui.viewholder.InfoItemViewHolder;
 
 import java.util.ArrayList;
 
-public class InfoItemListAdapter extends RecyclerView.Adapter<InfoItemViewHolder> {
+public class ModelInfoItemListAdapter extends RecyclerView.Adapter<InfoItemViewHolder> {
     private final String TAG = getClass().getSimpleName();
 
     private ArrayList<InfoItemModel> dataSet;
     private Context context;
+    private OnItemClickListener onItemClickListener;
 
-    public InfoItemListAdapter(ArrayList<InfoItemModel> dataSet, Context context) {
+    public ModelInfoItemListAdapter(ArrayList<InfoItemModel> dataSet, Context context) {
         this.dataSet = dataSet;
         this.context = context;
     }
 
     @Override
     public InfoItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new InfoItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_info, parent, false));
+        return new InfoItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_model_info, parent, false));
     }
 
     @Override
@@ -35,11 +37,33 @@ public class InfoItemListAdapter extends RecyclerView.Adapter<InfoItemViewHolder
             return;
         }
 
-        InfoItemModel model = dataSet.get(position);
+        final InfoItemModel model = dataSet.get(position);
 
         if (model == null) {
             Log.e(TAG, "onBindViewHolder()-> model is null");
             return;
+        }
+
+        if (holder.rootView != null) {
+            holder.rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(model);
+                    }
+                }
+            });
+
+            holder.rootView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemLongClick(model);
+                        return true;
+                    }
+                    return false;
+                }
+            });
         }
 
         if (holder.IVImage != null) {
@@ -62,5 +86,15 @@ public class InfoItemListAdapter extends RecyclerView.Adapter<InfoItemViewHolder
 
     public ArrayList<InfoItemModel> getDataSet() {
         return dataSet;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(InfoItemModel model);
+
+        void onItemLongClick(InfoItemModel model);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

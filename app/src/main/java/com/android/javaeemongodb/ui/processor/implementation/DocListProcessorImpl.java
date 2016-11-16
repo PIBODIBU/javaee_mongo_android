@@ -3,6 +3,7 @@ package com.android.javaeemongodb.ui.processor.implementation;
 import android.util.Log;
 
 import com.android.javaeemongodb.data.api.RetrofitAPI;
+import com.android.javaeemongodb.data.model.ErrorModel;
 import com.android.javaeemongodb.data.model.MedicineModel;
 import com.android.javaeemongodb.ui.presenter.DocListPresenter;
 import com.android.javaeemongodb.ui.processor.DocListProcessor;
@@ -66,6 +67,11 @@ public class DocListProcessorImpl implements DocListProcessor {
 
         dataSet.clear();
         fillDataSet(dataSet);
+    }
+
+    @Override
+    public void deleteModel(MedicineModel model) {
+
     }
 
     public interface OnDataReloadListener {

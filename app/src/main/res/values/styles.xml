@@ -96,7 +96,7 @@
     </style>
 
     <style name="AppTheme.TextView.Primary">
-        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.TextView.Primary.Title">

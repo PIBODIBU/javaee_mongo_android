@@ -2,8 +2,9 @@ package com.android.javaeemongodb.ui.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.android.javaeemongodb.ui.adapter.DocListAdapter;
-import com.android.javaeemongodb.ui.view.DocListView;
+import com.android.javaeemongodb.data.model.MedicineModel;
+import com.android.javaeemongodb.ui.adapter.DocumentListAdapter;
+import com.android.javaeemongodb.ui.view.DocumentListView;
 
 public interface DocListPresenter {
     void start();
@@ -12,11 +13,15 @@ public interface DocListPresenter {
 
     void setupRecyclerView(RecyclerView recyclerView);
 
-    void setupAdapter(DocListAdapter adapter);
+    void setupAdapter(DocumentListAdapter adapter);
 
     void setupProcessor();
 
-    DocListView getView();
+    DocumentListView getView();
+
+    DocumentListAdapter getAdapter();
 
     void refreshDataSet();
+
+    void deleteModel(MedicineModel model);
 }

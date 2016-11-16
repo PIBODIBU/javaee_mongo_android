@@ -12,6 +12,9 @@ import butterknife.ButterKnife;
 
 public class InfoItemViewHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.root_view)
+    public View rootView;
+
     @BindView(R.id.image_view)
     public ImageView IVImage;
 

@@ -6,7 +6,7 @@ import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.data.api.RetrofitAPI;
 import com.android.javaeemongodb.data.model.InfoItemModel;
 import com.android.javaeemongodb.data.model.MedicineModel;
-import com.android.javaeemongodb.ui.presenter.InfoPresenter;
+import com.android.javaeemongodb.ui.presenter.ModelInfoPresenter;
 import com.android.javaeemongodb.ui.processor.InfoProcessor;
 
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public class InfoProcessorImpl implements InfoProcessor {
 
     private InfoProcessorImpl.OnDataReloadListener onDataReloadListener;
     private String docId = "";
-    private InfoPresenter presenter;
+    private ModelInfoPresenter presenter;
 
-    public InfoProcessorImpl(InfoPresenter presenter) {
+    public InfoProcessorImpl(ModelInfoPresenter presenter) {
         this.presenter = presenter;
     }
 

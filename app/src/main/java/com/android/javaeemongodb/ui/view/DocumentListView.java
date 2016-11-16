@@ -1,15 +1,17 @@
 package com.android.javaeemongodb.ui.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.android.javaeemongodb.data.model.MedicineModel;
 
-public interface InfoView {
+public interface DocumentListView {
     Context getContext();
+
+    AppCompatActivity getActivity();
 
     @Nullable
     RecyclerView getRecyclerView();
@@ -22,11 +24,7 @@ public interface InfoView {
 
     void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener onRefreshListener);
 
-    MedicineModel getModel();
+    void showSnackBar(String message);
 
-    MedicineModel getModelFromIntent(Intent intent);
-
-    boolean checkIntent(Intent intent);
-
-    void startModelEditActivity();
+    void startModelInfoActivity(MedicineModel model);
 }

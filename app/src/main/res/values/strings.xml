@@ -19,4 +19,6 @@
     <string name="snack_bar_dismiss">Відміна</string>
     <string name="snack_bar_model_added">Додано</string>
     <string name="snack_bar_model_not_added">Помилка</string>
+    <string name="snack_bar_delete_failed">Помилка</string>
+    <string name="snack_bar_deleted">Помилка</string>
 </resources>

@@ -7,19 +7,22 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.android.javaeemongodb.R;
+import com.android.javaeemongodb.data.model.MedicineModel;
+import com.android.javaeemongodb.helper.IntentKeys;
 import com.android.javaeemongodb.ui.activity.base.BaseNavDrawerActivity;
 import com.android.javaeemongodb.ui.presenter.DocListPresenter;
-import com.android.javaeemongodb.ui.presenter.implementation.DocListPresenterImpl;
-import com.android.javaeemongodb.ui.view.DocListView;
+import com.android.javaeemongodb.ui.presenter.implementation.DocumentListPresenterImpl;
+import com.android.javaeemongodb.ui.view.DocumentListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DocListActivity extends BaseNavDrawerActivity implements DocListView {
+public class DocumentListActivity extends BaseNavDrawerActivity implements DocumentListView {
     private final String TAG = getClass().getSimpleName();
     private final int REQUEST_ADD_MODEL = 1;
 
@@ -44,7 +47,7 @@ public class DocListActivity extends BaseNavDrawerActivity implements DocListVie
 
         setupView();
 
-        presenter = new DocListPresenterImpl(this);
+        presenter = new DocumentListPresenterImpl(this);
         presenter.start();
     }
 
@@ -74,11 +77,16 @@ public class DocListActivity extends BaseNavDrawerActivity implements DocListVie
 
     @OnClick(R.id.fab_add)
     public void startAddModelActivity() {
-        startActivityForResult(new Intent(DocListActivity.this, ModelAddActivity.class), REQUEST_ADD_MODEL);
+        startActivityForResult(new Intent(DocumentListActivity.this, ModelAddActivity.class), REQUEST_ADD_MODEL);
     }
 
     @Override
     public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public AppCompatActivity getActivity() {
         return this;
     }
 
@@ -101,5 +109,16 @@ public class DocListActivity extends BaseNavDrawerActivity implements DocListVie
     @Override
     public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener onRefreshListener) {
         refreshLayout.setOnRefreshListener(onRefreshListener);
+    }
+
+    @Override
+    public void showSnackBar(String message) {
+        Snackbar.make(rootView, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void startModelInfoActivity(MedicineModel model) {
+        startActivity(new Intent(DocumentListActivity.this, ModelInfoActivity.class)
+                .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model));
     }
 }

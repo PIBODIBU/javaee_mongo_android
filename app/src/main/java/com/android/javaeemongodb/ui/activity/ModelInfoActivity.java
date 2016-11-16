@@ -11,18 +11,17 @@ import android.util.Log;
 
 import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.data.model.MedicineModel;
-import com.android.javaeemongodb.helper.Colors;
 import com.android.javaeemongodb.helper.IntentKeys;
 import com.android.javaeemongodb.ui.activity.base.BaseNavDrawerActivity;
-import com.android.javaeemongodb.ui.presenter.InfoPresenter;
-import com.android.javaeemongodb.ui.presenter.implementation.InfoPresenterImpl;
-import com.android.javaeemongodb.ui.view.InfoView;
+import com.android.javaeemongodb.ui.presenter.ModelInfoPresenter;
+import com.android.javaeemongodb.ui.presenter.implementation.ModelInfoPresenterImpl;
+import com.android.javaeemongodb.ui.view.ModelInfoView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class InfoActivity extends BaseNavDrawerActivity implements InfoView {
+public class ModelInfoActivity extends BaseNavDrawerActivity implements ModelInfoView {
     private final String TAG = getClass().getSimpleName();
 
     @BindView(R.id.recycler_view)
@@ -34,13 +33,13 @@ public class InfoActivity extends BaseNavDrawerActivity implements InfoView {
     @BindView(R.id.collapsing_toolbar)
     public CollapsingToolbarLayout collapsingToolbarLayout;
 
-    private InfoPresenter presenter;
+    private ModelInfoPresenter presenter;
     private MedicineModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_model_info);
 
         if (!checkIntent(getIntent())) {
             Log.e(TAG, "onCreate()-> Malformed Intent");
@@ -53,7 +52,7 @@ public class InfoActivity extends BaseNavDrawerActivity implements InfoView {
         getDrawer();
         setupView();
 
-        presenter = new InfoPresenterImpl(this);
+        presenter = new ModelInfoPresenterImpl(this);
         presenter.start();
     }
 
@@ -117,7 +116,12 @@ public class InfoActivity extends BaseNavDrawerActivity implements InfoView {
     @OnClick(R.id.fab_edit)
     @Override
     public void startModelEditActivity() {
-        startActivity(new Intent(InfoActivity.this, ModelEditActivity.class)
+        startActivity(new Intent(ModelInfoActivity.this, ModelEditActivity.class)
                 .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model));
+    }
+
+    @Override
+    public void setModel(MedicineModel model) {
+        this.model = model;
     }
 }

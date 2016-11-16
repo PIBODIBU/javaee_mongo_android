@@ -1,48 +1,45 @@
 package com.android.javaeemongodb.ui.presenter.implementation;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.android.javaeemongodb.data.model.MedicineModel;
-import com.android.javaeemongodb.helper.IntentKeys;
-import com.android.javaeemongodb.ui.activity.InfoActivity;
-import com.android.javaeemongodb.ui.adapter.DocListAdapter;
-import com.android.javaeemongodb.ui.presenter.DocListPresenter;
-import com.android.javaeemongodb.ui.processor.DocListProcessor;
-import com.android.javaeemongodb.ui.processor.implementation.DocListProcessorImpl;
-import com.android.javaeemongodb.ui.view.DocListView;
+import com.android.javaeemongodb.data.model.InfoItemModel;
+import com.android.javaeemongodb.ui.adapter.ModelInfoItemListAdapter;
+import com.android.javaeemongodb.ui.presenter.ModelInfoPresenter;
+import com.android.javaeemongodb.ui.processor.InfoProcessor;
+import com.android.javaeemongodb.ui.processor.implementation.InfoProcessorImpl;
+import com.android.javaeemongodb.ui.view.ModelInfoView;
 
 import java.util.ArrayList;
 
-public class DocListPresenterImpl implements DocListPresenter {
+public class ModelInfoPresenterImpl implements ModelInfoPresenter {
     private final String TAG = getClass().getSimpleName();
 
-    private DocListAdapter adapter;
+    private ModelInfoItemListAdapter adapter;
     private LinearLayoutManager layoutManager;
-    private ArrayList<MedicineModel> dataSet;
-    private DocListView view;
-    private DocListProcessor processor;
+    private ArrayList<InfoItemModel> dataSet;
+    private ModelInfoView view;
+    private InfoProcessor processor;
 
-    public DocListPresenterImpl(@NonNull DocListView view) {
+    public ModelInfoPresenterImpl(@NonNull ModelInfoView view) {
         this.view = view;
-        this.processor = new DocListProcessorImpl(this);
+        this.processor = new InfoProcessorImpl(this);
     }
 
     @Override
     public void start() {
         dataSet = new ArrayList<>();
         layoutManager = new LinearLayoutManager(view.getContext());
-        adapter = new DocListAdapter(view.getContext(), dataSet);
+        adapter = new ModelInfoItemListAdapter(dataSet, view.getContext());
 
         setupAdapter(adapter);
         setupRecyclerView(view.getRecyclerView());
         setupProcessor();
 
+        processor.setDocumentId(view.getModel().getId());
         processor.fillDataSet(adapter.getDataSet());
-        adapter.notifyDataSetChanged();
 
         view.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -51,11 +48,6 @@ public class DocListPresenterImpl implements DocListPresenter {
                 processor.reloadDataSet(adapter.getDataSet());
             }
         });
-    }
-
-    @Override
-    public void refreshDataSet() {
-        processor.reloadDataSet(adapter.getDataSet());
     }
 
     @Override
@@ -70,19 +62,23 @@ public class DocListPresenterImpl implements DocListPresenter {
     }
 
     @Override
-    public void setupAdapter(DocListAdapter adapter) {
-        adapter.setOnClickListener(new DocListAdapter.OnClickListener() {
+    public void setupAdapter(ModelInfoItemListAdapter adapter) {
+        adapter.setOnItemClickListener(new ModelInfoItemListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClickListener(MedicineModel model) {
-                view.getContext().startActivity(new Intent(view.getContext(), InfoActivity.class)
-                        .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model));
+            public void onItemClick(InfoItemModel model) {
+
+            }
+
+            @Override
+            public void onItemLongClick(InfoItemModel model) {
+
             }
         });
     }
 
     @Override
     public void setupProcessor() {
-        processor.setOnDataReloadListener(new DocListProcessorImpl.OnDataReloadListener() {
+        processor.setOnDataReloadListener(new InfoProcessorImpl.OnDataReloadListener() {
             @Override
             public void onLoaded() {
                 adapter.notifyDataSetChanged();
@@ -92,7 +88,12 @@ public class DocListPresenterImpl implements DocListPresenter {
     }
 
     @Override
-    public DocListView getView() {
+    public ModelInfoItemListAdapter getAdapter() {
+        return adapter;
+    }
+
+    @Override
+    public ModelInfoView getView() {
         return view;
     }
 }

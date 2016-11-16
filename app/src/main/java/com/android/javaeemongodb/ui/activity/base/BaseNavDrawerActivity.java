@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.android.javaeemongodb.R;
-import com.android.javaeemongodb.ui.activity.InfoActivity;
-import com.android.javaeemongodb.ui.activity.DocListActivity;
+import com.android.javaeemongodb.ui.activity.DocumentListActivity;
+import com.android.javaeemongodb.ui.activity.ModelInfoActivity;
 import com.android.javaeemongodb.ui.activity.SettingsActivity;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -81,9 +81,9 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
             return;
         }
 
-        if (basename.equals(DocListActivity.class.getSimpleName())) {
+        if (basename.equals(DocumentListActivity.class.getSimpleName())) {
             drawer.setSelection(DrawerItems.DocListActivity.ordinal());
-        } else if (basename.equals(InfoActivity.class.getSimpleName())) {
+        } else if (basename.equals(ModelInfoActivity.class.getSimpleName())) {
             drawer.setSelection(DrawerItems.InfoActivity.ordinal());
         } else if (basename.equals(SettingsActivity.class.getSimpleName())) {
             drawer.setSelection(DrawerItems.SettingsActivity.ordinal());
@@ -192,23 +192,23 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
 
                             switch (drawerItems) {
                                 case DocListActivity: {
-                                    if (currentClass.equals(DocListActivity.class.getSimpleName())) {
+                                    if (currentClass.equals(DocumentListActivity.class.getSimpleName())) {
                                         break;
                                     } else {
                                         finish();
 
-                                        startActivity(new Intent(BaseNavDrawerActivity.this, DocListActivity.class)
+                                        startActivity(new Intent(BaseNavDrawerActivity.this, DocumentListActivity.class)
                                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                         break;
                                     }
                                 }
                                 case InfoActivity: {
-                                    if (currentClass.equals(InfoActivity.class.getSimpleName())) {
+                                    if (currentClass.equals(ModelInfoActivity.class.getSimpleName())) {
                                         break;
                                     } else {
                                         finish();
 
-                                        startActivity(new Intent(BaseNavDrawerActivity.this, InfoActivity.class)
+                                        startActivity(new Intent(BaseNavDrawerActivity.this, ModelInfoActivity.class)
                                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                         break;
                                     }

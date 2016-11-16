@@ -6,6 +6,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,15 +16,16 @@ import com.android.javaeemongodb.ui.viewholder.DocListItemViewHolder;
 
 import java.util.ArrayList;
 
-public class DocListAdapter extends RecyclerView.Adapter<DocListItemViewHolder> {
+public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHolder> {
     private final String TAG = getClass().getSimpleName();
 
     private Context context;
     private ArrayList<MedicineModel> dataSet;
 
-    private OnClickListener onClickListener;
+    private OnItemClickListener onItemClickListener;
+    private OnItemOptionsClickListener onItemOptionsClickListener;
 
-    public DocListAdapter(Context context, @NonNull ArrayList<MedicineModel> dataSet) {
+    public DocumentListAdapter(Context context, @NonNull ArrayList<MedicineModel> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
     }
@@ -51,9 +53,21 @@ public class DocListAdapter extends RecyclerView.Adapter<DocListItemViewHolder> 
             holder.RLRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (onClickListener != null) {
-                        onClickListener.onItemClickListener(model);
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(model);
                     }
+                }
+            });
+
+            holder.RLRootView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemLongClick(model);
+                        return true;
+                    }
+
+                    return false;
                 }
             });
         }
@@ -75,6 +89,26 @@ public class DocListAdapter extends RecyclerView.Adapter<DocListItemViewHolder> 
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(context, holder.IBPopup);
                 popupMenu.inflate(R.menu.menu_popup_card_medicine);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_edit:
+                                if (onItemOptionsClickListener != null) {
+                                    onItemOptionsClickListener.onEdit(model);
+                                }
+                                break;
+                            case R.id.action_delete:
+                                if (onItemOptionsClickListener != null) {
+                                    onItemOptionsClickListener.onDelete(model);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        return false;
+                    }
+                });
                 popupMenu.show();
             }
         });
@@ -89,11 +123,23 @@ public class DocListAdapter extends RecyclerView.Adapter<DocListItemViewHolder> 
         return dataSet;
     }
 
-    public interface OnClickListener {
-        void onItemClickListener(MedicineModel model);
+    public interface OnItemClickListener {
+        void onItemClick(MedicineModel model);
+
+        void onItemLongClick(MedicineModel model);
     }
 
-    public void setOnClickListener(OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+    public interface OnItemOptionsClickListener {
+        void onDelete(MedicineModel model);
+
+        void onEdit(MedicineModel model);
+    }
+
+    public void setOnItemOptionsClickListener(OnItemOptionsClickListener onItemOptionsClickListener) {
+        this.onItemOptionsClickListener = onItemOptionsClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

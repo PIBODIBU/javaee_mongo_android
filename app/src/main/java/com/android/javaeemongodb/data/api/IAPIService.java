@@ -11,6 +11,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IAPIService {
     @GET("documents")
@@ -26,4 +27,7 @@ public interface IAPIService {
                               @Field("indication") String indication,
                               @Field("contraindication") String contraindication,
                               @Field("sales_form") String sales_form);
+
+    @GET("documents/delete")
+    Call<ErrorModel> deleteModel(@Query("docId") String docId);
 }

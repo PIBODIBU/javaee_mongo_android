@@ -11,4 +11,6 @@ public interface DocListProcessor {
     void reloadDataSet(ArrayList<MedicineModel> dataSet);
 
     void setOnDataReloadListener(DocListProcessorImpl.OnDataReloadListener onDataReloadListener);
+
+    void deleteModel(MedicineModel model);
 }
