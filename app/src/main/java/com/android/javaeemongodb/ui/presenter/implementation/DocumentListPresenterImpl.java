@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.data.api.RetrofitAPI;
@@ -154,7 +155,37 @@ public class DocumentListPresenterImpl implements DocListPresenter {
 
             @Override
             public void onFailure(Call<ErrorModel> call, Throwable t) {
+                getView().showSnackBar(getView().getContext().getString(R.string.snack_bar_delete_failed));
+            }
+        });
+    }
 
+    @Override
+    public void deleteManyModels() {
+        String modelsIds = "";
+
+        for (MedicineModel model : getAdapter().getSelectedModels()) {
+            modelsIds = modelsIds.concat(model.getId()).concat(",");
+        }
+
+        getView().setSelectionModelActivated(false);
+        getAdapter().deactivateSelectionMode();
+
+        RetrofitAPI.getInstance(getView().getContext()).deleteModel(modelsIds).enqueue(new Callback<ErrorModel>() {
+            @Override
+            public void onResponse(Call<ErrorModel> call, Response<ErrorModel> response) {
+                if (response == null || response.body() == null || response.body().getError()) {
+                    getView().showSnackBar(getView().getContext().getString(R.string.snack_bar_delete_failed));
+                    return;
+                }
+
+                getView().showSnackBar(getView().getContext().getString(R.string.snack_bar_deleted));
+                processor.reloadDataSet(getAdapter().getDataSet());
+            }
+
+            @Override
+            public void onFailure(Call<ErrorModel> call, Throwable t) {
+                getView().showSnackBar(getView().getContext().getString(R.string.snack_bar_delete_failed));
             }
         });
     }

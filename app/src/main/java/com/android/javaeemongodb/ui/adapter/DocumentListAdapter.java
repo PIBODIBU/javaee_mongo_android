@@ -205,6 +205,10 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
         return selectedModeActivated;
     }
 
+    public ArrayList<MedicineModel> getSelectedModels() {
+        return selectedModels;
+    }
+
     public void deactivateSelectionMode() {
         /*for (MedicineModel model : dataSet) {
             model.setSelected(false);

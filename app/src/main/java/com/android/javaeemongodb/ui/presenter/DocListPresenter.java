@@ -24,4 +24,6 @@ public interface DocListPresenter {
     void refreshDataSet();
 
     void deleteModel(final int position, final MedicineModel model);
+
+    void deleteManyModels();
 }

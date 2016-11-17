@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.data.model.MedicineModel;
@@ -141,6 +142,20 @@ public class DocumentListActivity extends BaseNavDrawerActivity implements Docum
     public void setSelectionModelActivated(boolean activated) {
         if (activated) {
             toolbar.inflateMenu(R.menu.menu_doc_list_mode_delete);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.action_delete: {
+                            presenter.deleteManyModels();
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                    return false;
+                }
+            });
         } else {
             toolbar.getMenu().clear();
         }
