@@ -29,5 +29,5 @@ public interface IAPIService {
                               @Field("sales_form") String sales_form);
 
     @GET("documents/delete")
-    Call<ErrorModel> deleteModel(@Query("docId") String docId);
+    Call<ErrorModel> deleteModel(@Query("ids") String docId);
 }

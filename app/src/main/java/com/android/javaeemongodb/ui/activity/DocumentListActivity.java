@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.data.model.MedicineModel;
@@ -25,9 +26,13 @@ import butterknife.OnClick;
 public class DocumentListActivity extends BaseNavDrawerActivity implements DocumentListView {
     private final String TAG = getClass().getSimpleName();
     private final int REQUEST_ADD_MODEL = 1;
+    private final int REQUEST_MODEL_EDIT = 2;
 
     @BindView(R.id.root_view)
     public CoordinatorLayout rootView;
+
+    @BindView(R.id.toolbar)
+    public Toolbar toolbar;
 
     @BindView(R.id.recycler_view)
     public RecyclerView recyclerView;
@@ -60,6 +65,10 @@ public class DocumentListActivity extends BaseNavDrawerActivity implements Docum
                 presenter.refreshDataSet();
                 Snackbar.make(rootView, R.string.snack_bar_model_added, Snackbar.LENGTH_LONG).show();
             }
+        }
+
+        if (requestCode == REQUEST_MODEL_EDIT) {
+            presenter.refreshDataSet();
         }
     }
 
@@ -117,8 +126,23 @@ public class DocumentListActivity extends BaseNavDrawerActivity implements Docum
     }
 
     @Override
+    public void startModelEditActivity(MedicineModel model) {
+        startActivityForResult(new Intent(DocumentListActivity.this, ModelEditActivity.class)
+                .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model), REQUEST_MODEL_EDIT);
+    }
+
+    @Override
     public void startModelInfoActivity(MedicineModel model) {
-        startActivity(new Intent(DocumentListActivity.this, ModelInfoActivity.class)
-                .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model));
+        startActivityForResult(new Intent(DocumentListActivity.this, ModelInfoActivity.class)
+                .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model), REQUEST_MODEL_EDIT);
+    }
+
+    @Override
+    public void setSelectionModelActivated(boolean activated) {
+        if (activated) {
+            toolbar.inflateMenu(R.menu.menu_doc_list_mode_delete);
+        } else {
+            toolbar.getMenu().clear();
+        }
     }
 }

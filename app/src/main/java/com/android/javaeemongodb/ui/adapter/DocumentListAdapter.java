@@ -2,6 +2,7 @@ package com.android.javaeemongodb.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,15 +20,19 @@ import java.util.ArrayList;
 public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHolder> {
     private final String TAG = getClass().getSimpleName();
 
+    private Boolean selectedModeActivated = false;
     private Context context;
     private ArrayList<MedicineModel> dataSet;
+    private ArrayList<MedicineModel> selectedModels;
 
     private OnItemClickListener onItemClickListener;
     private OnItemOptionsClickListener onItemOptionsClickListener;
+    private OnSelectionModeActivationListener onSelectionModeActivationListener;
 
     public DocumentListAdapter(Context context, @NonNull ArrayList<MedicineModel> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
+        selectedModels = new ArrayList<>();
     }
 
     @Override
@@ -53,8 +58,32 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
             holder.RLRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onItemClick(model);
+                    if (isSelectedModeActivated()) {
+                        Boolean modelNewState = !model.isSelected();
+
+                        if (!modelNewState) {
+                            selectedModels.remove(model);
+                        } else {
+                            selectedModels.add(model);
+                        }
+
+                        model.setSelected(modelNewState);
+
+                        Log.d(TAG, "onClick()-> " + selectedModels.size());
+
+                        if (selectedModels.size() == 0) {
+                            if (onSelectionModeActivationListener != null) {
+                                onSelectionModeActivationListener.onDeactivated();
+                            }
+
+                            setSelectedModeActivated(false);
+                        }
+
+                        notifyDataSetChanged();
+                    } else {
+                        if (onItemClickListener != null) {
+                            onItemClickListener.onItemClick(model);
+                        }
                     }
                 }
             });
@@ -62,14 +91,29 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
             holder.RLRootView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onItemLongClick(model);
-                        return true;
+                    if (!model.isSelected()) {
+                        if (onSelectionModeActivationListener != null) {
+                            onSelectionModeActivationListener.onActivated();
+                        }
+
+                        setSelectedModeActivated(true);
+                        model.setSelected(true);
+                        selectedModels.add(model);
+                        notifyDataSetChanged();
+                    } else {
+                      /*  if (onItemClickListener != null) {
+                            onItemClickListener.onItemLongClick(model);
+                            return true;
+                        }*/
                     }
 
-                    return false;
+                    return true;
                 }
             });
+
+            holder.RLRootView.setBackground(
+                    model.isSelected() ? ContextCompat.getDrawable(context, R.drawable.selector_card_bg_invert) :
+                            ContextCompat.getDrawable(context, R.drawable.selector_card_bg));
         }
 
         if (holder.TVTitle != null) {
@@ -95,12 +139,12 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
                         switch (item.getItemId()) {
                             case R.id.action_edit:
                                 if (onItemOptionsClickListener != null) {
-                                    onItemOptionsClickListener.onEdit(model);
+                                    onItemOptionsClickListener.onEdit(holder.getAdapterPosition(), model);
                                 }
                                 break;
                             case R.id.action_delete:
                                 if (onItemOptionsClickListener != null) {
-                                    onItemOptionsClickListener.onDelete(model);
+                                    onItemOptionsClickListener.onDelete(holder.getAdapterPosition(), model);
                                 }
                                 break;
                             default:
@@ -130,9 +174,19 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
     }
 
     public interface OnItemOptionsClickListener {
-        void onDelete(MedicineModel model);
+        void onDelete(int position, MedicineModel model);
 
-        void onEdit(MedicineModel model);
+        void onEdit(int position, MedicineModel model);
+    }
+
+    public interface OnSelectionModeActivationListener {
+        void onActivated();
+
+        void onDeactivated();
+    }
+
+    public void setOnSelectionModeActivationListener(OnSelectionModeActivationListener onSelectionModeActivationListener) {
+        this.onSelectionModeActivationListener = onSelectionModeActivationListener;
     }
 
     public void setOnItemOptionsClickListener(OnItemOptionsClickListener onItemOptionsClickListener) {
@@ -141,5 +195,23 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    private void setSelectedModeActivated(Boolean selectedModeActivated) {
+        this.selectedModeActivated = selectedModeActivated;
+    }
+
+    private Boolean isSelectedModeActivated() {
+        return selectedModeActivated;
+    }
+
+    public void deactivateSelectionMode() {
+        /*for (MedicineModel model : dataSet) {
+            model.setSelected(false);
+        }*/
+
+        setSelectedModeActivated(false);
+        selectedModels.clear();
+//        notifyDataSetChanged();
     }
 }

@@ -20,5 +20,6 @@
     <string name="snack_bar_model_added">Додано</string>
     <string name="snack_bar_model_not_added">Помилка</string>
     <string name="snack_bar_delete_failed">Помилка</string>
-    <string name="snack_bar_deleted">Помилка</string>
+    <string name="snack_bar_deleted">Видалено</string>
+    <string name="action_delete_multiple_models">Видалили</string>
 </resources>

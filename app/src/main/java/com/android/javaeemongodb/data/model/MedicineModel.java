@@ -4,11 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class MedicineModel implements Serializable {
-
+public class MedicineModel extends AbstractModel implements Serializable {
     private final String ID_TITLE = "Ідентифікатор";
     private final String NAME_TITLE = "Медична назва";
-    private final String Description_TITLE = "Опис препарату";
+    private final String DESCRIPTION_TITLE = "Опис препарату";
     private final String INDICATION_TITLE = "Показання";
     private final String CONTRAINDICATION_TITLE = "Протипоказання";
     private final String SALES_FORM_TITLE = "Форма продажу";

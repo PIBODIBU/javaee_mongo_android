@@ -27,4 +27,8 @@ public interface DocumentListView {
     void showSnackBar(String message);
 
     void startModelInfoActivity(MedicineModel model);
+
+    void startModelEditActivity(MedicineModel model);
+
+    void setSelectionModelActivated(boolean activated);
 }

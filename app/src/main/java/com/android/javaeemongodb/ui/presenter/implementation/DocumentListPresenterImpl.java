@@ -1,6 +1,5 @@
 package com.android.javaeemongodb.ui.presenter.implementation;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +9,6 @@ import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.data.api.RetrofitAPI;
 import com.android.javaeemongodb.data.model.ErrorModel;
 import com.android.javaeemongodb.data.model.MedicineModel;
-import com.android.javaeemongodb.helper.IntentKeys;
-import com.android.javaeemongodb.ui.activity.ModelInfoActivity;
 import com.android.javaeemongodb.ui.adapter.DocumentListAdapter;
 import com.android.javaeemongodb.ui.dialog.bottomsheet.BottomSheetModelOptions;
 import com.android.javaeemongodb.ui.presenter.DocListPresenter;
@@ -55,6 +52,8 @@ public class DocumentListPresenterImpl implements DocListPresenter {
         getView().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                getAdapter().deactivateSelectionMode();
+                getView().setSelectionModelActivated(false);
                 getView().setRefreshing(true);
                 processor.reloadDataSet(adapter.getDataSet());
             }
@@ -94,13 +93,25 @@ public class DocumentListPresenterImpl implements DocListPresenter {
 
         adapter.setOnItemOptionsClickListener(new DocumentListAdapter.OnItemOptionsClickListener() {
             @Override
-            public void onDelete(MedicineModel model) {
-                deleteModel(model);
+            public void onDelete(int position, MedicineModel model) {
+                deleteModel(position, model);
             }
 
             @Override
-            public void onEdit(MedicineModel model) {
-                getView().startModelInfoActivity(model);
+            public void onEdit(int position, MedicineModel model) {
+                getView().startModelEditActivity(model);
+            }
+        });
+
+        adapter.setOnSelectionModeActivationListener(new DocumentListAdapter.OnSelectionModeActivationListener() {
+            @Override
+            public void onActivated() {
+                view.setSelectionModelActivated(true);
+            }
+
+            @Override
+            public void onDeactivated() {
+                view.setSelectionModelActivated(false);
             }
         });
     }
@@ -127,7 +138,7 @@ public class DocumentListPresenterImpl implements DocListPresenter {
     }
 
     @Override
-    public void deleteModel(final MedicineModel model) {
+    public void deleteModel(final int position, final MedicineModel model) {
         RetrofitAPI.getInstance(getView().getContext()).deleteModel(model.getId()).enqueue(new Callback<ErrorModel>() {
             @Override
             public void onResponse(Call<ErrorModel> call, Response<ErrorModel> response) {
@@ -137,8 +148,8 @@ public class DocumentListPresenterImpl implements DocListPresenter {
                 }
 
                 getView().showSnackBar(getView().getContext().getString(R.string.snack_bar_deleted));
-                getAdapter().getDataSet().remove(model);
-                getAdapter().notifyItemRemoved(adapter.getDataSet().indexOf(model));
+                getAdapter().getDataSet().remove(position);
+                getAdapter().notifyItemRemoved(position);
             }
 
             @Override
