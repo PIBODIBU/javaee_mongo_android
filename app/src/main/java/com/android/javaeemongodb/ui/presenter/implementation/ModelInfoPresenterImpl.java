@@ -8,29 +8,29 @@ import android.support.v7.widget.RecyclerView;
 import com.android.javaeemongodb.data.model.InfoItemModel;
 import com.android.javaeemongodb.ui.adapter.ModelInfoItemListAdapter;
 import com.android.javaeemongodb.ui.presenter.ModelInfoPresenter;
-import com.android.javaeemongodb.ui.processor.InfoProcessor;
-import com.android.javaeemongodb.ui.processor.implementation.InfoProcessorImpl;
+import com.android.javaeemongodb.ui.processor.ModelInfoProcessor;
+import com.android.javaeemongodb.ui.processor.implementation.ModelInfoProcessorImpl;
 import com.android.javaeemongodb.ui.view.ModelInfoView;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class ModelInfoPresenterImpl implements ModelInfoPresenter {
     private final String TAG = getClass().getSimpleName();
 
     private ModelInfoItemListAdapter adapter;
     private LinearLayoutManager layoutManager;
-    private ArrayList<InfoItemModel> dataSet;
+    private LinkedList<InfoItemModel> dataSet;
     private ModelInfoView view;
-    private InfoProcessor processor;
+    private ModelInfoProcessor processor;
 
     public ModelInfoPresenterImpl(@NonNull ModelInfoView view) {
         this.view = view;
-        this.processor = new InfoProcessorImpl(this);
+        this.processor = new ModelInfoProcessorImpl(this);
     }
 
     @Override
     public void start() {
-        dataSet = new ArrayList<>();
+        dataSet = new LinkedList<>();
         layoutManager = new LinearLayoutManager(view.getContext());
         adapter = new ModelInfoItemListAdapter(dataSet, view.getContext());
 
@@ -56,6 +56,11 @@ public class ModelInfoPresenterImpl implements ModelInfoPresenter {
     }
 
     @Override
+    public void refillDataSet() {
+        processor.reloadDataSet(adapter.getDataSet());
+    }
+
+    @Override
     public void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -78,7 +83,7 @@ public class ModelInfoPresenterImpl implements ModelInfoPresenter {
 
     @Override
     public void setupProcessor() {
-        processor.setOnDataReloadListener(new InfoProcessorImpl.OnDataReloadListener() {
+        processor.setOnDataReloadListener(new ModelInfoProcessorImpl.OnDataReloadListener() {
             @Override
             public void onLoaded() {
                 adapter.notifyDataSetChanged();

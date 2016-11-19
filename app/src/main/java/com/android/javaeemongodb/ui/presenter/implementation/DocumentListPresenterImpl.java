@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.data.api.RetrofitAPI;
@@ -13,8 +12,8 @@ import com.android.javaeemongodb.data.model.MedicineModel;
 import com.android.javaeemongodb.ui.adapter.DocumentListAdapter;
 import com.android.javaeemongodb.ui.dialog.bottomsheet.BottomSheetModelOptions;
 import com.android.javaeemongodb.ui.presenter.DocListPresenter;
-import com.android.javaeemongodb.ui.processor.DocListProcessor;
-import com.android.javaeemongodb.ui.processor.implementation.DocListProcessorImpl;
+import com.android.javaeemongodb.ui.processor.DocumentListProcessor;
+import com.android.javaeemongodb.ui.processor.implementation.DocumentListProcessorImpl;
 import com.android.javaeemongodb.ui.view.DocumentListView;
 
 import java.util.ArrayList;
@@ -30,11 +29,11 @@ public class DocumentListPresenterImpl implements DocListPresenter {
     private LinearLayoutManager layoutManager;
     private ArrayList<MedicineModel> dataSet;
     private DocumentListView view;
-    private DocListProcessor processor;
+    private DocumentListProcessor processor;
 
     public DocumentListPresenterImpl(@NonNull DocumentListView view) {
         this.view = view;
-        this.processor = new DocListProcessorImpl(this);
+        this.processor = new DocumentListProcessorImpl(this);
     }
 
     @Override
@@ -63,6 +62,14 @@ public class DocumentListPresenterImpl implements DocListPresenter {
 
     @Override
     public void refreshDataSet() {
+        processor.reloadDataSet(getAdapter().getDataSet());
+    }
+
+    @Override
+    public void refreshDataSet(Boolean withIndication) {
+        if (withIndication)
+            view.setRefreshing(true);
+
         processor.reloadDataSet(getAdapter().getDataSet());
     }
 
@@ -119,7 +126,7 @@ public class DocumentListPresenterImpl implements DocListPresenter {
 
     @Override
     public void setupProcessor() {
-        processor.setOnDataReloadListener(new DocListProcessorImpl.OnDataReloadListener() {
+        processor.setOnDataReloadListener(new DocumentListProcessorImpl.OnDataReloadListener() {
             @Override
             public void onLoaded() {
                 getAdapter().notifyDataSetChanged();

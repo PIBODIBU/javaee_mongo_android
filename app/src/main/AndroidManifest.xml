@@ -21,7 +21,7 @@
         <activity android:name=".ui.activity.ModelInfoActivity" />
         <activity android:name=".ui.activity.ModelEditActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
-        <activity android:name=".ui.activity.ModelAddActivity"></activity>
+        <activity android:name=".ui.activity.ModelAddActivity" />
     </application>
 
 </manifest>

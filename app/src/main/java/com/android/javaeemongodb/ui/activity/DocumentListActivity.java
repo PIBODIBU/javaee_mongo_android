@@ -26,8 +26,9 @@ import butterknife.OnClick;
 
 public class DocumentListActivity extends BaseNavDrawerActivity implements DocumentListView {
     private final String TAG = getClass().getSimpleName();
-    private final int REQUEST_ADD_MODEL = 1;
+    private final int REQUEST_MODEL_ADD = 1;
     private final int REQUEST_MODEL_EDIT = 2;
+    private final int REQUEST_MODEL_INFO = 3;
 
     @BindView(R.id.root_view)
     public CoordinatorLayout rootView;
@@ -46,7 +47,7 @@ public class DocumentListActivity extends BaseNavDrawerActivity implements Docum
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doc_list);
+        setContentView(R.layout.activity_document_list);
 
         ButterKnife.bind(this);
         getDrawer();
@@ -61,15 +62,22 @@ public class DocumentListActivity extends BaseNavDrawerActivity implements Docum
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_ADD_MODEL) {
+        if (requestCode == REQUEST_MODEL_ADD) {
             if (resultCode == RESULT_OK) {
-                presenter.refreshDataSet();
-                Snackbar.make(rootView, R.string.snack_bar_model_added, Snackbar.LENGTH_LONG).show();
+                onModelAdded();
+            }
+        }
+
+        if (requestCode == REQUEST_MODEL_INFO) {
+            if (resultCode == ModelInfoActivity.RESULT_MODEL_EDITED) {
+                presenter.refreshDataSet(true);
             }
         }
 
         if (requestCode == REQUEST_MODEL_EDIT) {
-            presenter.refreshDataSet();
+            if (resultCode == RESULT_OK) {
+                onModelEdited();
+            }
         }
     }
 
@@ -80,6 +88,18 @@ public class DocumentListActivity extends BaseNavDrawerActivity implements Docum
     }
 
     @Override
+    public void onModelEdited() {
+        presenter.refreshDataSet(true);
+        Snackbar.make(rootView, R.string.snack_bar_model_edited, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onModelAdded() {
+        presenter.refreshDataSet(true);
+        Snackbar.make(rootView, R.string.snack_bar_model_added, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
     public void setupView() {
         refreshLayout.setColorSchemeResources(
                 R.color.colorPrimary);
@@ -87,7 +107,7 @@ public class DocumentListActivity extends BaseNavDrawerActivity implements Docum
 
     @OnClick(R.id.fab_add)
     public void startAddModelActivity() {
-        startActivityForResult(new Intent(DocumentListActivity.this, ModelAddActivity.class), REQUEST_ADD_MODEL);
+        startActivityForResult(new Intent(DocumentListActivity.this, ModelAddActivity.class), REQUEST_MODEL_ADD);
     }
 
     @Override
@@ -135,7 +155,7 @@ public class DocumentListActivity extends BaseNavDrawerActivity implements Docum
     @Override
     public void startModelInfoActivity(MedicineModel model) {
         startActivityForResult(new Intent(DocumentListActivity.this, ModelInfoActivity.class)
-                .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model), REQUEST_MODEL_EDIT);
+                .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model), REQUEST_MODEL_INFO);
     }
 
     @Override

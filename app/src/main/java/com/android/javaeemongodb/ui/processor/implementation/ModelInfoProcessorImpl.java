@@ -7,27 +7,27 @@ import com.android.javaeemongodb.data.api.RetrofitAPI;
 import com.android.javaeemongodb.data.model.InfoItemModel;
 import com.android.javaeemongodb.data.model.MedicineModel;
 import com.android.javaeemongodb.ui.presenter.ModelInfoPresenter;
-import com.android.javaeemongodb.ui.processor.InfoProcessor;
+import com.android.javaeemongodb.ui.processor.ModelInfoProcessor;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InfoProcessorImpl implements InfoProcessor {
+public class ModelInfoProcessorImpl implements ModelInfoProcessor {
     private final String TAG = getClass().getSimpleName();
 
-    private InfoProcessorImpl.OnDataReloadListener onDataReloadListener;
+    private ModelInfoProcessorImpl.OnDataReloadListener onDataReloadListener;
     private String docId = "";
     private ModelInfoPresenter presenter;
 
-    public InfoProcessorImpl(ModelInfoPresenter presenter) {
+    public ModelInfoProcessorImpl(ModelInfoPresenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
-    public void fillDataSet(final ArrayList<InfoItemModel> dataSet) {
+    public void fillDataSet(final LinkedList<InfoItemModel> dataSet) {
         if (docId.equals("")) {
             Log.e(TAG, "fillDataSet()-> Document id is not set. See InfoProcessorImpl#setDocumentId()");
             return;
@@ -97,7 +97,7 @@ public class InfoProcessorImpl implements InfoProcessor {
     }
 
     @Override
-    public void reloadDataSet(ArrayList<InfoItemModel> dataSet) {
+    public void reloadDataSet(LinkedList<InfoItemModel> dataSet) {
         if (dataSet == null) {
             Log.e(TAG, "reloadDataSet()-> data set is null");
             return;
@@ -112,7 +112,7 @@ public class InfoProcessorImpl implements InfoProcessor {
     }
 
     @Override
-    public void setOnDataReloadListener(InfoProcessorImpl.OnDataReloadListener onDataReloadListener) {
+    public void setOnDataReloadListener(ModelInfoProcessorImpl.OnDataReloadListener onDataReloadListener) {
         this.onDataReloadListener = onDataReloadListener;
     }
 

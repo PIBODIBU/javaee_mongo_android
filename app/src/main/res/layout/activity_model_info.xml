@@ -24,16 +24,6 @@
             app:expandedTitleTextAppearance="@style/AppTheme.ExpandedTextAppearance"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    style="@style/AppTheme.TextView.Primary.Title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="" />
-            </LinearLayout>-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

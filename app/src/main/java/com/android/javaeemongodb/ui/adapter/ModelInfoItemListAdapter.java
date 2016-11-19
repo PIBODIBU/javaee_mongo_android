@@ -9,18 +9,20 @@ import android.view.ViewGroup;
 
 import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.data.model.InfoItemModel;
+import com.android.javaeemongodb.data.model.MedicineModel;
 import com.android.javaeemongodb.ui.viewholder.InfoItemViewHolder;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class ModelInfoItemListAdapter extends RecyclerView.Adapter<InfoItemViewHolder> {
     private final String TAG = getClass().getSimpleName();
 
-    private ArrayList<InfoItemModel> dataSet;
+    private LinkedList<InfoItemModel> dataSet;
     private Context context;
     private OnItemClickListener onItemClickListener;
 
-    public ModelInfoItemListAdapter(ArrayList<InfoItemModel> dataSet, Context context) {
+    public ModelInfoItemListAdapter(LinkedList<InfoItemModel> dataSet, Context context) {
         this.dataSet = dataSet;
         this.context = context;
     }
@@ -84,7 +86,7 @@ public class ModelInfoItemListAdapter extends RecyclerView.Adapter<InfoItemViewH
         return dataSet == null ? 0 : dataSet.size();
     }
 
-    public ArrayList<InfoItemModel> getDataSet() {
+    public LinkedList<InfoItemModel> getDataSet() {
         return dataSet;
     }
 

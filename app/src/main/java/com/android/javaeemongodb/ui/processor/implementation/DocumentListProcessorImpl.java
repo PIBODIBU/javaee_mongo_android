@@ -3,10 +3,9 @@ package com.android.javaeemongodb.ui.processor.implementation;
 import android.util.Log;
 
 import com.android.javaeemongodb.data.api.RetrofitAPI;
-import com.android.javaeemongodb.data.model.ErrorModel;
 import com.android.javaeemongodb.data.model.MedicineModel;
 import com.android.javaeemongodb.ui.presenter.DocListPresenter;
-import com.android.javaeemongodb.ui.processor.DocListProcessor;
+import com.android.javaeemongodb.ui.processor.DocumentListProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +14,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DocListProcessorImpl implements DocListProcessor {
+public class DocumentListProcessorImpl implements DocumentListProcessor {
     private final String TAG = getClass().getSimpleName();
 
     private OnDataReloadListener onDataReloadListener;
     private DocListPresenter presenter;
 
-    public DocListProcessorImpl(DocListPresenter presenter) {
+    public DocumentListProcessorImpl(DocListPresenter presenter) {
         this.presenter = presenter;
     }
 

@@ -22,4 +22,6 @@
     <string name="snack_bar_delete_failed">Помилка</string>
     <string name="snack_bar_deleted">Видалено</string>
     <string name="action_delete_multiple_models">Видалили</string>
+    <string name="model_update_failed">Помилка</string>
+    <string name="snack_bar_model_edited">Успішно оновлено</string>
 </resources>

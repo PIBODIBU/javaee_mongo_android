@@ -31,4 +31,8 @@ public interface DocumentListView {
     void startModelEditActivity(MedicineModel model);
 
     void setSelectionModelActivated(boolean activated);
+
+    void onModelEdited();
+
+    void onModelAdded();
 }

@@ -19,4 +19,6 @@ public interface ModelInfoPresenter {
     ModelInfoItemListAdapter getAdapter();
 
     ModelInfoView getView();
+
+    void refillDataSet();
 }

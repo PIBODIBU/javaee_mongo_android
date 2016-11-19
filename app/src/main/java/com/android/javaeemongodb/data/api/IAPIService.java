@@ -30,4 +30,12 @@ public interface IAPIService {
 
     @GET("documents/delete")
     Call<ErrorModel> deleteModel(@Query("ids") String docId);
+
+    @FormUrlEncoded
+    @POST("documents/update/{docId}")
+    Call<ErrorModel> updateModel(@Path("docId") String docId,
+                                 @Field("name") String name,
+                                 @Field("indication") String indication,
+                                 @Field("contraindication") String contraindication,
+                                 @Field("sales_form") String sales_form);
 }

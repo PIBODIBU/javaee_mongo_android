@@ -3,6 +3,7 @@ package com.android.javaeemongodb.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,6 +24,9 @@ import butterknife.OnClick;
 
 public class ModelInfoActivity extends BaseNavDrawerActivity implements ModelInfoView {
     private final String TAG = getClass().getSimpleName();
+
+    private final int REQUEST_MODEL_EDIT = 1;
+    public static final int RESULT_MODEL_EDITED = 1;
 
     @BindView(R.id.recycler_view)
     public RecyclerView recyclerView;
@@ -57,9 +61,44 @@ public class ModelInfoActivity extends BaseNavDrawerActivity implements ModelInf
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_MODEL_EDIT) {
+            if (resultCode == RESULT_OK) {
+                if (!data.getExtras().containsKey(IntentKeys.OBJECT_MEDICINE_MODEL)) {
+                    Log.e(TAG, "onActivityResult()-> No data for UI update");
+                    return;
+                }
+
+                MedicineModel model = ((MedicineModel) data.getExtras().getSerializable(IntentKeys.OBJECT_MEDICINE_MODEL));
+                if (model == null) {
+                    Log.e(TAG, "onActivityResult()-> Model is null");
+                    return;
+                }
+
+                onModelEdited(model);
+            }
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         presenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onModelEdited(@NonNull MedicineModel model) {
+        this.model = model;
+        setResult(RESULT_MODEL_EDITED);
+        updateUI();
+    }
+
+    @Override
+    public void updateUI() {
+        collapsingToolbarLayout.setTitle(getModel().getName());
+        presenter.refillDataSet();
     }
 
     @Override
@@ -116,8 +155,8 @@ public class ModelInfoActivity extends BaseNavDrawerActivity implements ModelInf
     @OnClick(R.id.fab_edit)
     @Override
     public void startModelEditActivity() {
-        startActivity(new Intent(ModelInfoActivity.this, ModelEditActivity.class)
-                .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model));
+        startActivityForResult(new Intent(ModelInfoActivity.this, ModelEditActivity.class)
+                .putExtra(IntentKeys.OBJECT_MEDICINE_MODEL, model), REQUEST_MODEL_EDIT);
     }
 
     @Override
