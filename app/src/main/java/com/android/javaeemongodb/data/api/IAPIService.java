@@ -2,6 +2,7 @@ package com.android.javaeemongodb.data.api;
 
 import com.android.javaeemongodb.data.model.ErrorModel;
 import com.android.javaeemongodb.data.model.MedicineModel;
+import com.android.javaeemongodb.data.model.ServerInfoModel;
 
 import java.util.List;
 
@@ -38,4 +39,7 @@ public interface IAPIService {
                                  @Field("indication") String indication,
                                  @Field("contraindication") String contraindication,
                                  @Field("sales_form") String sales_form);
+
+    @GET("server/info")
+    Call<ServerInfoModel> getServerInfo();
 }

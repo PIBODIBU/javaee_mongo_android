@@ -9,7 +9,7 @@ import android.view.Window;
 
 import com.android.javaeemongodb.R;
 
-public abstract class BaseAnimActivity extends AppCompatActivity {
+public abstract class BaseAnimActivity extends BaseActivity {
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);

@@ -24,4 +24,5 @@
     <string name="action_delete_multiple_models">Видалили</string>
     <string name="model_update_failed">Помилка</string>
     <string name="snack_bar_model_edited">Успішно оновлено</string>
+    <string name="menu_item_search">Пошук</string>
 </resources>

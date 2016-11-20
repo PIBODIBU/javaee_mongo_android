@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.android.javaeemongodb.R;
 import com.android.javaeemongodb.ui.activity.DocumentListActivity;
+import com.android.javaeemongodb.ui.activity.InfoActivity;
 import com.android.javaeemongodb.ui.activity.ModelInfoActivity;
 import com.android.javaeemongodb.ui.activity.SettingsActivity;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -20,6 +21,7 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
@@ -83,7 +85,7 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
 
         if (basename.equals(DocumentListActivity.class.getSimpleName())) {
             drawer.setSelection(DrawerItems.DocListActivity.ordinal());
-        } else if (basename.equals(ModelInfoActivity.class.getSimpleName())) {
+        } else if (basename.equals(InfoActivity.class.getSimpleName())) {
             drawer.setSelection(DrawerItems.InfoActivity.ordinal());
         } else if (basename.equals(SettingsActivity.class.getSimpleName())) {
             drawer.setSelection(DrawerItems.SettingsActivity.ordinal());
@@ -151,6 +153,7 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
                 .addDrawerItems(
                         docList,
                         info,
+                        new DividerDrawerItem(),
                         settings
                 )
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
@@ -208,7 +211,7 @@ public abstract class BaseNavDrawerActivity extends BaseAnimActivity {
                                     } else {
                                         finish();
 
-                                        startActivity(new Intent(BaseNavDrawerActivity.this, ModelInfoActivity.class)
+                                        startActivity(new Intent(BaseNavDrawerActivity.this, InfoActivity.class)
                                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                         break;
                                     }

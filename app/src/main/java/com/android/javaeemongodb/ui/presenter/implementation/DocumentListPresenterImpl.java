@@ -81,6 +81,7 @@ public class DocumentListPresenterImpl implements DocListPresenter {
     @Override
     public void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(getAdapter());
     }
 
@@ -146,6 +147,11 @@ public class DocumentListPresenterImpl implements DocListPresenter {
     }
 
     @Override
+    public ArrayList<MedicineModel> getDataSet() {
+        return dataSet;
+    }
+
+    @Override
     public void deleteModel(final int position, final MedicineModel model) {
         RetrofitAPI.getInstance(getView().getContext()).deleteModel(model.getId()).enqueue(new Callback<ErrorModel>() {
             @Override
@@ -195,5 +201,11 @@ public class DocumentListPresenterImpl implements DocListPresenter {
                 getView().showSnackBar(getView().getContext().getString(R.string.snack_bar_delete_failed));
             }
         });
+    }
+
+    @Override
+    public void setSelectionModeActivated(Boolean selectionModeActivated) {
+        getAdapter().setSelectedModeActivated(selectionModeActivated);
+        getAdapter().notifyDataSetChanged();
     }
 }

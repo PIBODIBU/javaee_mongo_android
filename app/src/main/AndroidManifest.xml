@@ -22,6 +22,9 @@
         <activity android:name=".ui.activity.ModelEditActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.ModelAddActivity" />
+        <activity
+            android:name=".ui.activity.InfoActivity"
+            android:label="Інформація" />
     </application>
 
 </manifest>

@@ -59,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_subtitle"
+            android:maxLines="3"
             android:padding="16dp"
             android:text="После доработки эта технология, возможно, поможет людям с повреждённым спинным мозгом снова ходить или хотя бы совершать некоторые движения ногами." />
     </RelativeLayout>

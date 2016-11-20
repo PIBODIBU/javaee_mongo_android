@@ -55,6 +55,7 @@ public class ModelInfoActivity extends BaseNavDrawerActivity implements ModelInf
         ButterKnife.bind(this);
         getDrawer();
         setupView();
+        attachSlider();
 
         presenter = new ModelInfoPresenterImpl(this);
         presenter.start();

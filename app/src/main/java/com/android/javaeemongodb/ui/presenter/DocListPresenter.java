@@ -6,6 +6,8 @@ import com.android.javaeemongodb.data.model.MedicineModel;
 import com.android.javaeemongodb.ui.adapter.DocumentListAdapter;
 import com.android.javaeemongodb.ui.view.DocumentListView;
 
+import java.util.ArrayList;
+
 public interface DocListPresenter {
     void start();
 
@@ -21,6 +23,8 @@ public interface DocListPresenter {
 
     DocumentListAdapter getAdapter();
 
+    ArrayList<MedicineModel> getDataSet();
+
     void refreshDataSet();
 
     void refreshDataSet(Boolean withIndication);
@@ -28,4 +32,6 @@ public interface DocListPresenter {
     void deleteModel(final int position, final MedicineModel model);
 
     void deleteManyModels();
+
+    void setSelectionModeActivated(Boolean selectionModeActivated);
 }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHolder> {
     private final String TAG = getClass().getSimpleName();
+    private final Integer MAX_LINES_COUNT = 3;
 
     private Boolean selectedModeActivated = false;
     private Context context;
@@ -37,7 +38,7 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
 
     @Override
     public DocListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DocListItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_medicine, parent, false));
+        return new DocListItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_document, parent, false));
     }
 
     @Override
@@ -53,6 +54,9 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
             Log.e(TAG, "onBindViewHolder()-> model is null");
             return;
         }
+
+        final PopupMenu popupMenu = new PopupMenu(context, holder.IBPopup);
+        popupMenu.inflate(R.menu.menu_popup_card_medicine);
 
         if (holder.RLRootView != null) {
             holder.RLRootView.setOnClickListener(new View.OnClickListener() {
@@ -111,9 +115,8 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
                 }
             });
 
-            holder.RLRootView.setBackground(
-                    model.isSelected() ? ContextCompat.getDrawable(context, R.drawable.selector_card_bg_invert) :
-                            ContextCompat.getDrawable(context, R.drawable.selector_card_bg));
+            holder.RLRootView.setBackground(ContextCompat.getDrawable(context,
+                    model.isSelected() ? R.drawable.selector_card_bg_invert : R.drawable.selector_card_bg));
         }
 
         if (holder.TVTitle != null) {
@@ -131,8 +134,6 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
         holder.IBPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(context, holder.IBPopup);
-                popupMenu.inflate(R.menu.menu_popup_card_medicine);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -167,6 +168,10 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
         return dataSet;
     }
 
+    public void setDataSet(ArrayList<MedicineModel> dataSet) {
+        this.dataSet = dataSet;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(MedicineModel model);
 
@@ -197,11 +202,11 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
         this.onItemClickListener = onItemClickListener;
     }
 
-    private void setSelectedModeActivated(Boolean selectedModeActivated) {
+    public void setSelectedModeActivated(Boolean selectedModeActivated) {
         this.selectedModeActivated = selectedModeActivated;
     }
 
-    private Boolean isSelectedModeActivated() {
+    public Boolean isSelectedModeActivated() {
         return selectedModeActivated;
     }
 

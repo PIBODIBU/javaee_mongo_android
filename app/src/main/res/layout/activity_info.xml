@@ -2,12 +2,12 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_info"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true"
-    tools:context="com.android.javaeemongodb.ui.activity.ModelInfoActivity">
+    tools:context="com.android.javaeemongodb.ui.activity.InfoActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -24,7 +24,6 @@
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleTextAppearance="@style/AppTheme.ExpandedTextAppearance"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -48,16 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/cardview_light_background"
-            tools:listitem="@layout/item_model_info" />
+            tools:listitem="@layout/item_info" />
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:fabSize="normal"
-        app:layout_anchor="@+id/app_bar"
-        app:layout_anchorGravity="bottom|right|end"
-        app:srcCompat="@drawable/ic_mode_edit_white_24dp"
-        app:useCompatPadding="true" />
 </android.support.design.widget.CoordinatorLayout>

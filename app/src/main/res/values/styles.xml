@@ -16,6 +16,9 @@
 
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
 
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
         <item name="material_drawer_background">@color/drawer_bg</item>
         <item name="material_drawer_primary_text">@color/material_drawer_primary_text</item>
         <item name="material_drawer_primary_icon">@color/material_drawer_primary_icon</item>

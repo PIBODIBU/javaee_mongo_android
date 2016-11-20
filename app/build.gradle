@@ -115,4 +115,6 @@ dependencies {
 
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1.1@aar'
     compile 'com.github.mmin18:realtimeblurview:1.0.4'
+
+    compile 'com.r0adkll:slidableactivity:2.0.5'
 }
