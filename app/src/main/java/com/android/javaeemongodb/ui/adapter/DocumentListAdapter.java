@@ -55,9 +55,6 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
             return;
         }
 
-        final PopupMenu popupMenu = new PopupMenu(context, holder.IBPopup);
-        popupMenu.inflate(R.menu.menu_popup_card_medicine);
-
         if (holder.RLRootView != null) {
             holder.RLRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,10 +102,10 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
                         selectedModels.add(model);
                         notifyDataSetChanged();
                     } else {
-                      /*  if (onItemClickListener != null) {
+                        if (onItemClickListener != null) {
                             onItemClickListener.onItemLongClick(model);
                             return true;
-                        }*/
+                        }
                     }
 
                     return true;
@@ -119,21 +116,16 @@ public class DocumentListAdapter extends RecyclerView.Adapter<DocListItemViewHol
                     model.isSelected() ? R.drawable.selector_card_bg_invert : R.drawable.selector_card_bg));
         }
 
-        if (holder.TVTitle != null) {
-            holder.TVTitle.setText(model.getName());
-        }
-
-        if (holder.TVSubTitle != null) {
-            holder.TVSubTitle.setText(model.getId());
-        }
-
-        if (holder.TVDescription != null) {
-            holder.TVDescription.setText(model.getIndication());
-        }
+        holder.TVTitle.setText(model.getName());
+        holder.TVSubTitle.setText(model.getId());
+        holder.TVDescription.setText(model.getIndication());
 
         holder.IBPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final PopupMenu popupMenu = new PopupMenu(context, holder.IBPopup);
+                popupMenu.inflate(R.menu.menu_popup_card_medicine);
+
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {

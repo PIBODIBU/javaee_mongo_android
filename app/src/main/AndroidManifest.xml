@@ -26,5 +26,4 @@
             android:name=".ui.activity.InfoActivity"
             android:label="Інформація" />
     </application>
-
 </manifest>

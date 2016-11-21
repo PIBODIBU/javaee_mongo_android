@@ -53,7 +53,7 @@ public class DocumentListPresenterImpl implements DocListPresenter {
             @Override
             public void onRefresh() {
                 getAdapter().deactivateSelectionMode();
-                getView().setSelectionModelActivated(false);
+                getView().setSelectionModeActivated(false);
                 getView().setRefreshing(true);
                 processor.reloadDataSet(adapter.getDataSet());
             }
@@ -115,12 +115,12 @@ public class DocumentListPresenterImpl implements DocListPresenter {
         adapter.setOnSelectionModeActivationListener(new DocumentListAdapter.OnSelectionModeActivationListener() {
             @Override
             public void onActivated() {
-                view.setSelectionModelActivated(true);
+                view.setSelectionModeActivated(true);
             }
 
             @Override
             public void onDeactivated() {
-                view.setSelectionModelActivated(false);
+                view.setSelectionModeActivated(false);
             }
         });
     }
@@ -181,7 +181,7 @@ public class DocumentListPresenterImpl implements DocListPresenter {
             modelsIds = modelsIds.concat(model.getId()).concat(",");
         }
 
-        getView().setSelectionModelActivated(false);
+        getView().setSelectionModeActivated(false);
         getAdapter().deactivateSelectionMode();
 
         RetrofitAPI.getInstance(getView().getContext()).deleteModel(modelsIds).enqueue(new Callback<ErrorModel>() {
@@ -205,6 +205,11 @@ public class DocumentListPresenterImpl implements DocListPresenter {
 
     @Override
     public void setSelectionModeActivated(Boolean selectionModeActivated) {
+        if (!selectionModeActivated)
+            for (MedicineModel model : adapter.getDataSet()) {
+                model.setSelected(false);
+            }
+
         getAdapter().setSelectedModeActivated(selectionModeActivated);
         getAdapter().notifyDataSetChanged();
     }

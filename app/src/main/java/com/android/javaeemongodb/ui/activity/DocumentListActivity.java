@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -109,7 +108,7 @@ public class DocumentListActivity extends BaseNavDrawerActivity
                     getSearchView().setIconified(true);
                 } else if (presenter.getAdapter().isSelectedModeActivated()) {
                     presenter.setSelectionModeActivated(false);
-                    setSelectionModelActivated(false);
+                    setSelectionModeActivated(false);
                 } else {
                     super.onBackPressed();
                 }
@@ -239,7 +238,7 @@ public class DocumentListActivity extends BaseNavDrawerActivity
     }
 
     @Override
-    public void setSelectionModelActivated(boolean activated) {
+    public void setSelectionModeActivated(boolean activated) {
         if (activated) {
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_doc_list_mode_delete);
