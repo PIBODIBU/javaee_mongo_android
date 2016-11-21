@@ -1,5 +1,7 @@
 package com.android.javaeemongodb.ui.presenter;
 
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.android.javaeemongodb.data.model.MedicineModel;
@@ -34,4 +36,10 @@ public interface DocListPresenter {
     void deleteManyModels();
 
     void setSelectionModeActivated(Boolean selectionModeActivated);
+
+    void setLayoutManager(RecyclerView.LayoutManager layoutManager);
+
+    LinearLayoutManager getLinearLayoutManager();
+
+    GridLayoutManager getGridLayoutManager();
 }

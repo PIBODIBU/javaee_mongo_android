@@ -2,6 +2,7 @@ package com.android.javaeemongodb.ui.presenter.implementation;
 
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -26,7 +27,8 @@ public class DocumentListPresenterImpl implements DocListPresenter {
     private final String TAG = getClass().getSimpleName();
 
     private DocumentListAdapter adapter;
-    private LinearLayoutManager layoutManager;
+    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
     private ArrayList<MedicineModel> dataSet;
     private DocumentListView view;
     private DocumentListProcessor processor;
@@ -39,7 +41,8 @@ public class DocumentListPresenterImpl implements DocListPresenter {
     @Override
     public void start() {
         dataSet = new ArrayList<>();
-        layoutManager = new LinearLayoutManager(view.getContext());
+        linearLayoutManager = new LinearLayoutManager(view.getContext());
+        gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         adapter = new DocumentListAdapter(view.getContext(), dataSet);
 
         setupAdapter(adapter);
@@ -66,6 +69,11 @@ public class DocumentListPresenterImpl implements DocListPresenter {
     }
 
     @Override
+    public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
+        getView().getRecyclerView().setLayoutManager(layoutManager);
+    }
+
+    @Override
     public void refreshDataSet(Boolean withIndication) {
         if (withIndication)
             view.setRefreshing(true);
@@ -80,7 +88,7 @@ public class DocumentListPresenterImpl implements DocListPresenter {
 
     @Override
     public void setupRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(getAdapter());
     }
@@ -134,6 +142,16 @@ public class DocumentListPresenterImpl implements DocListPresenter {
                 getView().setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public LinearLayoutManager getLinearLayoutManager() {
+        return linearLayoutManager;
+    }
+
+    @Override
+    public GridLayoutManager getGridLayoutManager() {
+        return gridLayoutManager;
     }
 
     @Override

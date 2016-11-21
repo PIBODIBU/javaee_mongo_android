@@ -35,4 +35,8 @@ public interface DocumentListView {
     void onModelEdited();
 
     void onModelAdded();
+
+    int getViewMode();
+
+    void setViewMode(int viewMode);
 }

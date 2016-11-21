@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,8 @@ public class DocumentListActivity extends BaseNavDrawerActivity
     private final int REQUEST_MODEL_ADD = 1;
     private final int REQUEST_MODEL_EDIT = 2;
     private final int REQUEST_MODEL_INFO = 3;
+    private final int VIEW_MODE_LIST = 1;
+    private final int VIEW_MODE_GRID = 2;
 
     @BindView(R.id.root_view)
     public CoordinatorLayout rootView;
@@ -50,8 +53,8 @@ public class DocumentListActivity extends BaseNavDrawerActivity
     public SwipeRefreshLayout refreshLayout;
 
     private SearchView searchView;
-
     private DocListPresenter presenter;
+    private int viewMode = VIEW_MODE_LIST;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,19 @@ public class DocumentListActivity extends BaseNavDrawerActivity
         getSearchView().setOnCloseListener(this);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_change_view_mode:
+                setViewMode(getViewMode() == VIEW_MODE_LIST ? VIEW_MODE_GRID : VIEW_MODE_LIST);
+                item.setIcon(ContextCompat.getDrawable(this,
+                        getViewMode() == VIEW_MODE_LIST ? R.drawable.ic_view_module_white_24dp : R.drawable.ic_view_list_white_24dp));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -126,6 +142,27 @@ public class DocumentListActivity extends BaseNavDrawerActivity
     protected void onDestroy() {
         presenter.onDestroy();
         super.onDestroy();
+    }
+
+    @Override
+    public int getViewMode() {
+        return viewMode;
+    }
+
+    @Override
+    public void setViewMode(int viewMode) {
+        this.viewMode = viewMode;
+
+        switch (viewMode) {
+            case VIEW_MODE_LIST:
+                presenter.setLayoutManager(presenter.getLinearLayoutManager());
+                break;
+            case VIEW_MODE_GRID:
+                presenter.setLayoutManager(presenter.getGridLayoutManager());
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -259,6 +296,17 @@ public class DocumentListActivity extends BaseNavDrawerActivity
         } else {
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_doc_list_mode_normal);
+            toolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    setViewMode(getViewMode() == VIEW_MODE_LIST ? VIEW_MODE_GRID : VIEW_MODE_LIST);
+                    menuItem.setIcon(ContextCompat.getDrawable(DocumentListActivity.this,
+                            getViewMode() == VIEW_MODE_LIST ? R.drawable.ic_view_module_white_24dp : R.drawable.ic_view_list_white_24dp));
+                    return true;
+                }
+            });
+            toolbar.getMenu().getItem(0).setIcon(ContextCompat.getDrawable(this,
+                    getViewMode() == VIEW_MODE_LIST ? R.drawable.ic_view_module_white_24dp : R.drawable.ic_view_list_white_24dp));
             setSearchView((SearchView) MenuItemCompat.getActionView(toolbar.getMenu().findItem(R.id.action_search)));
             getSearchView().setOnQueryTextListener(this);
         }
